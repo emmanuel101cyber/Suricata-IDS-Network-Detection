@@ -1,18 +1,18 @@
-# Suricata IDS/NIDS Implementation and Custom Rule-Based Network Threat Detection
+# Suricata-Based Network Intrusion Detection and Custom Rule Engineering
 
 ![Suricata](https://img.shields.io/badge/Suricata-8.0.8-orange?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/Platform-Kali%20Linux-blue?style=for-the-badge)
-![Project](https://img.shields.io/badge/Project-CodeAlpha-red?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
 ![Category](https://img.shields.io/badge/Category-Network%20Security-purple?style=for-the-badge)
+![Project](https://img.shields.io/badge/Project-Personal%20Lab-success?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
 
 ## 1. Project Overview
 
-This project involved deploying, configuring, and testing **Suricata**, an open-source Network Intrusion Detection System (NIDS), in a Kali Linux environment.
+This project involved the deployment, configuration, and practical testing of **Suricata**, an open-source Network Intrusion Detection System (NIDS), in a Kali Linux laboratory environment.
 
-The implementation focused on establishing network traffic visibility, configuring Suricata's packet capture capabilities, integrating detection rules, monitoring TLS traffic, and developing a custom rule to identify connections to an authorized test domain.
+The implementation focused on establishing network traffic visibility, configuring Suricata's packet capture capabilities, integrating detection rules, monitoring TLS traffic, and developing a custom signature to identify connections to a specified test domain.
 
-A custom Suricata signature was implemented to inspect TLS Server Name Indication (SNI) metadata and generate an alert when traffic matched the specified domain.
+A custom Suricata rule was developed to inspect TLS Server Name Indication (SNI) metadata and generate an alert when traffic matched the configured domain.
 
 The project demonstrates practical experience with:
 
@@ -86,7 +86,7 @@ This configuration includes the laboratory host address `10.0.2.15`.
 
 ## 4. Scope and Authorization
 
-The project used the following domain as its authorized test destination:
+The project used the following domain as its test destination:
 
 ```text
 https://www.codealpha.tech/
@@ -256,7 +256,7 @@ The service was restarted after the configuration and local rule integration cha
 
 ## 6. Network Traffic Monitoring
 
-After the IDS configuration was completed, normal HTTPS traffic to the authorized test domain was generated.
+After the IDS configuration was completed, normal HTTPS traffic to the test domain was generated.
 
 Command:
 
@@ -310,16 +310,7 @@ The rule was created in:
 ### Custom Rule
 
 ```suricata
-alert tls $HOME_NET any -> $EXTERNAL_NET 443 (
-    msg:"LOCAL CodeAlpha TLS Connection Detected";
-    flow:established,to_server;
-    tls.sni;
-    content:"www.codealpha.tech";
-    startswith;
-    nocase;
-    sid:1000001;
-    rev:1;
-)
+alert tls $HOME_NET any -> $EXTERNAL_NET 443 (msg:"LOCAL Custom TLS Connection Detected"; flow:established,to_server; tls.sni; content:"www.codealpha.tech"; startswith; nocase; sid:1000001; rev:1;)
 ```
 
 ### Rule Explanation
@@ -461,9 +452,10 @@ The initial `detect.alert` counter was zero because no matching alert had yet be
 The later controlled test successfully triggered the custom rule with SID `1000001`.
 
 ---
+
 ## 10. Screenshots and Technical Evidence
 
-This section presents visual evidence of the Suricata IDS deployment, configuration, network monitoring, custom rule implementation, and successful detection testing performed during the CodeAlpha Cybersecurity Internship.
+This section presents visual evidence of the Suricata IDS deployment, configuration, network monitoring, custom rule implementation, and successful detection testing.
 
 All screenshots are stored in the `screenshots/` directory of this repository.
 
@@ -503,7 +495,7 @@ Shows the HOME_NET configuration used to define the monitored internal network.
 
 **Evidence:** `05-suricata-rules.png`
 
-Displays the configured rule files and custom detection rule used to identify TLS connections to the authorized CodeAlpha test domain.
+Displays the configured rule files and custom detection rule used to identify TLS connections to the test domain.
 
 ![Suricata Rules](screenshots/05-suricata-rules.png)
 
@@ -523,13 +515,13 @@ Confirms that the Suricata service is enabled and running on the Kali Linux syst
 
 ![Suricata Service](screenshots/07-suricata-running.png)
 
-### 10.8 CodeAlpha Website Traffic Monitoring
+### 10.8 Test Domain Traffic Monitoring
 
-**Evidence:** `08-codealpha-traffic-monitoring.png`
+**Evidence:** `08-test-domain-traffic-monitoring.png`
 
-Demonstrates network traffic generated during the authorized HTTPS connection to `www.codealpha.tech`.
+Demonstrates network traffic generated during the HTTPS connection to the test domain.
 
-![CodeAlpha Traffic Monitoring](screenshots/08-codealpha-traffic-monitoring.png)
+![Test Domain Traffic Monitoring](screenshots/08-test-domain-traffic-monitoring.png)
 
 ### 10.9 Suricata Packet Statistics
 
@@ -549,7 +541,7 @@ Displays Suricata detection statistics, providing insight into packet processing
 
 ### 10.11 Successful Custom TLS Detection Alert
 
-**Evidence:** `11-codealpha-custom-alert.png`
+**Evidence:** `11-custom-tls-detection-alert.png`
 
 Shows the successful execution of the custom Suricata TLS detection rule.
 
@@ -560,15 +552,16 @@ The alert confirms that Suricata identified a TLS connection containing the conf
 - Rule Message: `LOCAL CodeAlpha TLS Connection Detected`
 - Signature ID (SID): `1000001`
 - Protocol: TLS
-- Destination Domain: `www.codealpha.tech`
+- Test Domain: `www.codealpha.tech`
 - Detection Status: Successful
 
-This confirms that the custom detection rule matched the authorized test traffic and generated an alert in the EVE JSON log.
+This confirms that the custom detection rule matched the test traffic and generated an alert in the EVE JSON log.
 
-![Successful CodeAlpha TLS Detection](screenshots/11-codealpha-custom-alert.png)
+![Successful Custom TLS Detection](screenshots/11-custom-tls-detection-alert.png)
 
 **Evidence Summary:** The screenshots collectively demonstrate the installation, configuration, deployment, traffic monitoring, custom rule implementation, and successful alert generation of the Suricata-based Network Intrusion Detection System.
 
+---
 
 ## 11. Log Analysis and Useful Commands
 
@@ -640,6 +633,7 @@ sudo systemctl restart suricata
 This implementation provided practical exposure to the following cybersecurity skills:
 
 **Network Security**
+
 - Network traffic monitoring.
 - Packet capture.
 - Network interface inspection.
@@ -647,6 +641,7 @@ This implementation provided practical exposure to the following cybersecurity s
 - HTTPS and TLS traffic inspection.
 
 **Intrusion Detection**
+
 - Suricata deployment and configuration.
 - IDS ruleset management.
 - Signature-based detection.
@@ -654,6 +649,7 @@ This implementation provided practical exposure to the following cybersecurity s
 - Detection-engine validation.
 
 **Security Monitoring and Analysis**
+
 - EVE JSON event analysis.
 - TLS SNI inspection.
 - Alert extraction with `jq`.
@@ -661,6 +657,7 @@ This implementation provided practical exposure to the following cybersecurity s
 - Event verification and documentation.
 
 **Linux Administration**
+
 - Kali Linux command-line operations.
 - YAML configuration management.
 - Systemd service management.
@@ -711,7 +708,7 @@ The work continued after the virtual machine restarted.
 
 Although Suricata was capturing traffic and loading its ruleset, the initial detection counter showed zero alerts.
 
-A custom TLS SNI detection rule was therefore implemented and tested using authorized HTTPS traffic.
+A custom TLS SNI detection rule was therefore implemented and tested using HTTPS traffic to the test domain.
 
 The rule successfully generated an alert, confirming that the detection engine was functioning as intended.
 
@@ -739,8 +736,6 @@ Through this implementation, I gained practical experience configuring Suricata,
 
 The project also reinforced the importance of validating detection logic with controlled tests and maintaining clear technical evidence of each implementation stage.
 
-**Project completed as part of the CodeAlpha Cybersecurity Internship.**
-
 ---
 
 ## Author
@@ -751,8 +746,8 @@ Cybersecurity | Network Security | Ethical Hacking | Detection Engineering
 
 GitHub: [emmanuel101cyber](https://github.com/emmanuel101cyber)
 
-Main Cybersecurity Projects Repository: [Cybersecurity-Projects](https://github.com/emmanuel101cyber/Main-cybersecurity-portfolio)
+Main Cybersecurity Projects Repository: [Cybersecurity-Projects]()
 
 ---
 
-*Disclaimer: This project was conducted for educational and authorized cybersecurity training purposes. The custom detection rule was designed to identify a specific TLS domain match and does not classify the monitored website as malicious.*
+*Disclaimer: This project was conducted for educational and authorized cybersecurity testing purposes. The custom detection rule was designed to identify a specific TLS domain match and does not classify the monitored website as malicious.*
