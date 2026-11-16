@@ -461,60 +461,114 @@ The initial `detect.alert` counter was zero because no matching alert had yet be
 The later controlled test successfully triggered the custom rule with SID `1000001`.
 
 ---
+## 10. Screenshots and Technical Evidence
 
-## 10. Evidence and Screenshots
+This section presents visual evidence of the Suricata IDS deployment, configuration, network monitoring, custom rule implementation, and successful detection testing performed during the CodeAlpha Cybersecurity Internship.
 
-The following screenshots document the installation, configuration, monitoring, testing, and final detection results.
+All screenshots are stored in the `screenshots/` directory of this repository.
 
-All screenshots should be stored in the project's `screenshots/` directory.
+### 10.1 Suricata Version and Installation
 
-### Evidence Directory
+**Evidence:** `01-suricata-version.png`
 
-```text
-screenshots/
-│
-├── 01-suricata-version.png
-├── 02-network-interface.png
-├── 03-configuration-test.png
-├── 04-home-network-config.png
-├── 05-suricata-rules.png
-├── 06-af-packet-config.png
-├── 07-suricata-running.png
-├── 08-codealpha-traffic-monitoring.png
-├── 09-suricata-packet-statistics.png
-├── 10-suricata-detection-counters.png
-└── 11-codealpha-custom-alert.png
-```
+Confirms the installed Suricata version and verifies that the IDS software is available in the Kali Linux environment.
 
-### Screenshot Evidence Description
+![Suricata Version](screenshots/01-suricata-version.png)
 
-| No. | Screenshot | Evidence Description |
-|---|---|---|
-| 01 | `01-suricata-version.png` | Shows the installed Suricata version (8.0.8). |
-| 02 | `02-network-interface.png` | Shows the active network interface and assigned IPv4 address. |
-| 03 | `03-configuration-test.png` | Demonstrates successful Suricata configuration validation. |
-| 04 | `04-home-network-config.png` | Shows the configured HOME_NET definition. |
-| 05 | `05-suricata-rules.png` | Shows the installed Suricata ruleset. |
-| 06 | `06-af-packet-config.png` | Shows the AF_PACKET interface configuration. |
-| 07 | `07-suricata-running.png` | Demonstrates that the Suricata systemd service is running. |
-| 08 | `08-codealpha-traffic-monitoring.png` | Shows TLS traffic monitoring for the authorized test domain. |
-| 09 | `09-suricata-packet-statistics.png` | Shows packet capture statistics and capture health. |
-| 10 | `10-suricata-detection-counters.png` | Shows the initial detection-engine counters and ruleset statistics. |
-| 11 | `11-codealpha-custom-alert.png` | Demonstrates the successful custom rule alert with SID 1000001. |
+### 10.2 Network Interface Configuration
 
-### Most Important Evidence
+**Evidence:** `02-network-interface.png`
 
-The final custom alert screenshot is particularly important because it demonstrates actual rule execution rather than simply showing that Suricata was installed or running.
+Shows the network interface used for traffic monitoring, including the assigned IP address and interface details.
 
-It should clearly show:
+![Network Interface](screenshots/02-network-interface.png)
 
-- The alert timestamp.
-- Source IP address.
-- Destination IP address.
-- Custom alert signature.
-- Signature ID `1000001`.
+### 10.3 Suricata Configuration Validation
 
----
+**Evidence:** `03-configuration-test.png`
+
+Demonstrates successful validation of the Suricata configuration file without configuration errors.
+
+![Configuration Validation](screenshots/03-configuration-test.png)
+
+### 10.4 HOME_NET Configuration
+
+**Evidence:** `04-home-network-config.png`
+
+Shows the HOME_NET configuration used to define the monitored internal network.
+
+![HOME_NET Configuration](screenshots/04-home-network-config.png)
+
+### 10.5 Suricata Detection Rules
+
+**Evidence:** `05-suricata-rules.png`
+
+Displays the configured rule files and custom detection rule used to identify TLS connections to the authorized CodeAlpha test domain.
+
+![Suricata Rules](screenshots/05-suricata-rules.png)
+
+### 10.6 AF_PACKET Network Capture Configuration
+
+**Evidence:** `06-af-packet-config.png`
+
+Shows the AF_PACKET configuration specifying `eth0` as the network interface for packet capture.
+
+![AF_PACKET Configuration](screenshots/06-af-packet-config.png)
+
+### 10.7 Suricata Service Status
+
+**Evidence:** `07-suricata-running.png`
+
+Confirms that the Suricata service is enabled and running on the Kali Linux system.
+
+![Suricata Service](screenshots/07-suricata-running.png)
+
+### 10.8 CodeAlpha Website Traffic Monitoring
+
+**Evidence:** `08-codealpha-traffic-monitoring.png`
+
+Demonstrates network traffic generated during the authorized HTTPS connection to `www.codealpha.tech`.
+
+![CodeAlpha Traffic Monitoring](screenshots/08-codealpha-traffic-monitoring.png)
+
+### 10.9 Suricata Packet Statistics
+
+**Evidence:** `09-suricata-packet-statistics.png`
+
+Presents packet-processing statistics collected by Suricata during the monitoring session.
+
+![Packet Statistics](screenshots/09-suricata-packet-statistics.png)
+
+### 10.10 Detection Counters
+
+**Evidence:** `10-suricata-detection-counters.png`
+
+Displays Suricata detection statistics, providing insight into packet processing and alert-generation activity.
+
+![Detection Counters](screenshots/10-suricata-detection-counters.png)
+
+### 10.11 Successful Custom TLS Detection Alert
+
+**Evidence:** `11-codealpha-custom-alert.png`
+
+Shows the successful execution of the custom Suricata TLS detection rule.
+
+The alert confirms that Suricata identified a TLS connection containing the configured Server Name Indication (SNI), `www.codealpha.tech`.
+
+**Detection details:**
+
+- Rule Message: `LOCAL CodeAlpha TLS Connection Detected`
+- Signature ID (SID): `1000001`
+- Protocol: TLS
+- Destination Domain: `www.codealpha.tech`
+- Detection Status: Successful
+
+This confirms that the custom detection rule matched the authorized test traffic and generated an alert in the EVE JSON log.
+
+![Successful CodeAlpha TLS Detection](screenshots/11-codealpha-custom-alert.png)
+
+**Evidence Summary:** The screenshots collectively demonstrate the installation, configuration, deployment, traffic monitoring, custom rule implementation, and successful alert generation of the Suricata-based Network Intrusion Detection System.
+
 
 ## 11. Log Analysis and Useful Commands
 
