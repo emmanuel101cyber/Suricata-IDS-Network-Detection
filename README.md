@@ -751,7 +751,7 @@ Cybersecurity | Network Security | Ethical Hacking | Detection Engineering
 
 GitHub: [emmanuel101cyber](https://github.com/emmanuel101cyber)
 
-Main Cybersecurity Projects Repository: [Cybersecurity-Projects]()
+Main Cybersecurity Projects Repository: [Cybersecurity-Projects](https://github.com/emmanuel101cyber/Main-cybersecurity-portfolio)
 
 ---
 
